@@ -24,12 +24,31 @@ class HtmlTable:
                 + self.title + '</h3></caption>'
         return header
 
+    def table_columns(self):
+        columns = '<colgroup>\
+            <col style="background-color: ' + self.bg_color + '">,\
+            <col style="background-color: ' + self.alt_bg_color + '">\
+            <col style="background-color: ' + self.bg_color + '">\
+                </colgroup>'
+        return columns
+
+    def column_headings(self, td1='One', td2='Two', td3='Three'):
+        col_head = '<tr align="center">\
+                        <th scope="col">' + td1 + '</th>\
+                        <th scope="col">' + td2 + '</th>\
+                        <th scope="col">' + td3 + '</th>\
+                    </tr>'
+        return col_head
+
 
 def main():
     page = HtmlTable()
-    html = page.table_header()
+    header = page.table_header()
+    page.alt_bg_color = "rgb(235, 180, 33"
+    columns = page.table_columns()
+    col_head = page.column_headings('Term 1', 'Term 2', 'Term 3')
     with open('deleteme.html', 'w') as f:
-        f.write(html)
+        f.write(header + columns + col_head)
     os.system('epiphany deleteme.html')
 
 if __name__ == '__main__':
