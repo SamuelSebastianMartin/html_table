@@ -40,6 +40,14 @@ class HtmlTable:
                     </tr>'
         return col_head
 
+    def add_row(self, entry1='entry', entry2='entry', entry3='entry'):
+        row = '<tr align="center">\
+                    <td>' + entry1 + '</td>\
+                    <td>' + entry2 + '</td>\
+                    <td>' + entry3 + '</td>\
+                </tr>'
+        return row
+
 
 def main():
     page = HtmlTable()
@@ -47,8 +55,11 @@ def main():
     page.alt_bg_color = "rgb(235, 180, 33"
     columns = page.table_columns()
     col_head = page.column_headings('Term 1', 'Term 2', 'Term 3')
+    row1 = page.add_row()
+    row2 = page.add_row()
+    row3 = page.add_row()
     with open('deleteme.html', 'w') as f:
-        f.write(header + columns + col_head)
+        f.write(header + columns + col_head + row1 + row2 + row3)
     os.system('epiphany deleteme.html')
 
 if __name__ == '__main__':
