@@ -1,27 +1,24 @@
 #! /usr/bin/env python3
 
 
-
 class HtmlTable:
     """Creates an 'html' table in sections: 'header', 'columns',
     and 'row'. Functionality is very basic.
     Output is a string of html code, optionally saved to file."""
-    def __init__(self, title='Title', width='100', bg_color='rgb(255, 200, 33)'):
-        self.title = title
-        self.width = str(width)
-        self.bg_color = str(bg_color)
-        self.alt_bg_color = str(bg_color)
-        self.saveas = 'html_table.html'
+    def __init__(self):
+        self.width = str(100)
+        self.bg_color = 'rgb(255, 200, 33)'
+        self.alt_bg_color = 'rgb(235, 180, 33)'
         self.page = []
 
-    def table_header(self):
+    def table_header(self, title='Title'):
         """Returns the html code for a table header, with title."""
         header = '<table style="background-color: ' \
                 + self.bg_color \
                 + '; width: 100%"> <caption style="background-color: ' \
                 + self.bg_color \
                 + '; caption-side: top"><h3>' \
-                + self.title + '</h3></caption>'
+                + title + '</h3></caption>'
         self.page.append(header)
         return header
 
@@ -34,7 +31,7 @@ class HtmlTable:
         self.page.append(columns)
         return columns
 
-    def column_headings(self, td1='One', td2='Two', td3='Three'):
+    def column_headings(self, td1='Col 1', td2='Col 2', td3='Col 3'):
         col_head = '<tr align="center">\
                         <th scope="col">' + td1 + '</th>\
                         <th scope="col">' + td2 + '</th>\
@@ -43,37 +40,39 @@ class HtmlTable:
         self.page.append(col_head)
         return col_head
 
-    def add_row(self, entry1='entry', entry2='entry', entry3='entry'):
+    def add_row(self, td1='entry', td2='entry', td3='entry'):
         row = '<tr align="center">\
-                    <td>' + entry1 + '</td>\
-                    <td>' + entry2 + '</td>\
-                    <td>' + entry3 + '</td>\
+                    <td>' + td1 + '</td>\
+                    <td>' + td2 + '</td>\
+                    <td>' + td3 + '</td>\
                 </tr>'
         self.page.append(row)
         return row
 
-    def write_page(self):
+    def write_page(self, save_as='html_table.html'):
+        """Saves table. Default name is 'html_table.html'."""
         full_page = ''.join(self.page)
-        with open(self.saveas, 'w') as f:
+        with open(save_as, 'w') as f:
             f.write(full_page)
 
+    def test_HtmlTable(self):
+        """Builds a dummy table using all the class functionality, and opens
+        the table in a browser to test.
+        The 'os.system()' call should be adjusted for your own OS and browser."""
+        self.test_page = HtmlTable()
+        self.test_page.bg_color = 'red'
+        self.test_page.table_header(title='New Title')
+        self.test_page.alt_bg_color = "rgb(235, 180, 33"
+        self.test_page.table_columns()
+        self.test_page.column_headings(td1='One', td2='Two', td3='Three')
+        self.test_page.add_row()
+        self.test_page.add_row(td1='next', td2='next', td3='next')
+        self.test_page.write_page()
 
-def test_HtmlTable():
-    """Builds a dummy table using all the class functionality, and opens
-    the table in a browser to test.
-    The 'os.system()' call should be adjusted for your own OS and browser."""
-    import os
+        import os
+        os.system('epiphany html_table.html')
 
-    page = HtmlTable()
-    header = page.table_header()
-    page.alt_bg_color = "rgb(235, 180, 33"
-    columns = page.table_columns()
-    col_head = page.column_headings('Term 1', 'Term 2', 'Term 3')
-    row1 = page.add_row()
-    row2 = page.add_row()
-    row3 = page.add_row()
-    page.write_page()
-    os.system('epiphany deleteme.html')
 
 if __name__ == '__main__':
-    test_HtmlTable()
+    tryout = HtmlTable()
+    tryout.test_HtmlTable()
